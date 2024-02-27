@@ -10,6 +10,7 @@ int main(int argc, char **argv){
 
     if(argc != 2){
         fprintf(stderr, "usage: %s <port> \n", argv[0]);
+        exit(0);
     }
     listenfd = Open_listenfd(argv[1]);
     while(1){
