@@ -147,10 +147,14 @@ void serve_static(int fd,char *filename, int filesize){
   printf("%s",buf);
 
   srcfd = Open(filename,O_RDONLY,0);
+  // 11.9
+  // srcp = (char*)malloc(filesize);
   srcp = Mmap(0,filesize,PROT_READ,MAP_PRIVATE,srcfd,0);
+  // Rio_readn(srcfd,srcp,filesize);
   Close(srcfd);
   Rio_writen(fd,srcp,filesize);
   Munmap(srcp,filesize); 
+  // free(srcp);
 }
 
 void get_filetype(char *filename, char *filetype){
@@ -162,6 +166,9 @@ void get_filetype(char *filename, char *filetype){
     strcpy(filetype,"image/png");
   else if(strstr(filename,".jpg"))
     strcpy(filetype,"imge/jpeg");
+  // 11.7
+  else if (strstr(filename, ".mp4"))
+    strcpy(filetype, "video/mp4");
   else
     strcpy(filetype,"text/plain");
 }
